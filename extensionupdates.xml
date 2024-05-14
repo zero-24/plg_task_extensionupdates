@@ -17,6 +17,6 @@
 		<folder>src</folder>
 	</files>
 	<updateservers>
-		<server type="extension" name="CustomCSS Update Site">https://raw.githubusercontent.com/zero-24/plg_task_extensionupdates/master/update.xml</server>
+		<server type="extension" name="ExtensionUpdates Update Site">https://raw.githubusercontent.com/zero-24/plg_task_extensionupdates/master/update.xml</server>
 	</updateservers>
 </extension>
