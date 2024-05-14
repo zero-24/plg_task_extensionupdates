@@ -14,8 +14,30 @@
 		<folder>forms</folder>
 		<folder>language</folder>
 		<folder plugin="extensionupdates">services</folder>
+		<folder>sql</folder>
 		<folder>src</folder>
 	</files>
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/mysql/install.sql</file>
+			<file driver="postgresql" charset="utf8">sql/postgresql/install.sql</file>
+			<file driver="pgsql" charset="utf8">sql/postgresql/install.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/mysql/uninstall.sql</file>
+			<file driver="postgresql" charset="utf8">sql/postgresql/uninstall.sql</file>
+			<file driver="pgsql" charset="utf8">sql/postgresql/uninstall.sql</file>
+		</sql>
+	</uninstall>
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/mysql/updates</schemapath>
+			<schemapath type="postgresql">sql/postgresql/updates</schemapath>
+			<schemapath type="pgsql">sql/postgresql/updates</schemapath>
+		</schemas>
+	</update>
 	<updateservers>
 		<server type="extension" name="ExtensionUpdates Update Site">https://raw.githubusercontent.com/zero-24/plg_task_extensionupdates/master/update.xml</server>
 	</updateservers>

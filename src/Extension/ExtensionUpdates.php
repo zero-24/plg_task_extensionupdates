@@ -47,7 +47,7 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
     private const TASKS_MAP = [
         'update.extensions' => [
             'langConstPrefix' => 'PLG_TASK_EXTENSIONUPDATES_SEND',
-            'method'          => 'sendNotification',
+            'method'          => 'checkExtensionUpdates',
             'form'            => 'sendForm',
         ],
     ];
@@ -84,20 +84,26 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
      * @since  1.0.0
      * @throws \Exception
      */
-    private function sendNotification(ExecuteTaskEvent $event): int
+    private function checkExtensionUpdates(ExecuteTaskEvent $event): int
     {
         // Load the parameters.
         $specificEmail  = $event->getArgument('params')->email ?? '';
         $forcedLanguage = $event->getArgument('params')->language_override ?? '';
 
-        // This is the extension ID for Joomla! itself
-        $eid = ExtensionHelper::getExtensionRecord('joomla', 'file')->extension_id;
+        $joomlaUpdateModel = $this->getApplication()->bootComponent('com_joomlaupdate')
+            ->getMVCFactory()->createModel('Update', 'Administrator', ['ignore_request' => true]);
+
+
+        $noneCoreExtensionIds = $joomlaUpdateModel->getNonCoreExtensions();
+
+        foreach ($noneCoreExtensionIds as $key => $value) {
+            $eids[] = $value->extension_id;
+        }
 
         // Get any available updates
         $updater = Updater::getInstance();
-        
-        //TODO 
-        $results = $updater->findUpdates([$eid], 0);
+
+        $results = $updater->findUpdates($eids, 0);
 
         // If there are no updates our job is done. We need BOTH this check AND the one below.
         if (!$results) {
@@ -105,30 +111,22 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
         }
 
         // Get the update model and retrieve the Joomla! core updates
-        $model = $this->getApplication()->bootComponent('com_installer')
+        $installerModel = $this->getApplication()->bootComponent('com_installer')
             ->getMVCFactory()->createModel('Update', 'Administrator', ['ignore_request' => true]);
 
-        $model->setState('filter.extension_id', $eid);
-        $updates = $model->getItems();
+        //$installerModel->setState('filter.extension_id', $eids);
+        $updates = $installerModel->getItems();
 
         // If there are no updates we don't have to notify anyone about anything. This is NOT a duplicate check.
         if (empty($updates)) {
             return Status::OK;
         }
 
-        // Get the available update
-        $update = array_pop($updates);
-
-        // Check the available version. If it's the same or less than the installed version we have no updates to notify about.
-        if (version_compare($update->version, JVERSION, 'le')) {
-            return Status::OK;
-        }
-
-        // If we're here, we have updates. First, get a link to the Joomla! Update component.
+        // If we're here, we have updates. First, get a link to the Joomla! Installer component.
         $baseURL  = Uri::base();
         $baseURL  = rtrim($baseURL, '/');
         $baseURL .= (substr($baseURL, -13) !== 'administrator') ? '/administrator/' : '/';
-        $baseURL .= 'index.php?option=com_joomlaupdate';
+        $baseURL .= 'index.php?option=com_installer&view=update';
         $uri      = new Uri($baseURL);
 
 
@@ -179,40 +177,38 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
             $jLanguage->load('plg_task_extensionupdates', JPATH_ADMINISTRATOR, $forcedLanguage, true, false);
         }
 
-        // TODO
-        // Replace merge codes with their values
-        $newVersion = $update->version;
+        foreach ($updates as $updateId => $updateValue) {
+            $tmp = 1;
 
-        $jVersion       = new Version();
-        $currentVersion = $jVersion->getShortVersion();
+            // Replace merge codes with their values
+            $newVersion = $updateValue->version;
+            $currentVersion = $updateValue->current_version;
+            $extensionType = $updateValue->type;
+            $extensionName = ExtensionHelper::getExtensionRecord($updateValue->element, $updateValue->type)->name;
 
-        $sitename = $this->getApplication()->get('sitename');
+            $substitutions = [
+                'newversion'  => $newVersion,
+                'curversion'  => $currentVersion,
+                'url'         => Uri::base(),
+                'updateLink'  => $uri->toString(),
+            ];
 
-        $substitutions = [
-            'newversion'  => $newVersion,
-            'curversion'  => $currentVersion,
-            'sitename'    => $sitename,
-            'url'         => Uri::base(),
-            'link'        => $uri->toString(),
-            'releasenews' => 'https://www.joomla.org/announcements/release-news/',
-        ];
-
-        // Send the emails to the Super Users
-        foreach ($superUsers as $superUser) {
-            try {
-                $mailer = new MailTemplate('plg_task_extensionupdates.mail', $jLanguage->getTag());
-                $mailer->addRecipient($superUser->email);
-                $mailer->addTemplateData($substitutions);
-                $mailer->send();
-            } catch (MailDisabledException | phpMailerException $exception) {
+            // Send the emails to the Super Users
+            foreach ($superUsers as $superUser) {
                 try {
-                    $this->logTask($jLanguage->_($exception->getMessage()));
-                } catch (\RuntimeException $exception) {
-                    return Status::KNOCKOUT;
+                    $mailer = new MailTemplate('plg_task_extensionupdates.mail', $jLanguage->getTag());
+                    $mailer->addRecipient($superUser->email);
+                    $mailer->addTemplateData($substitutions);
+                    $mailer->send();
+                } catch (MailDisabledException | phpMailerException $exception) {
+                    try {
+                        $this->logTask($jLanguage->_($exception->getMessage()));
+                    } catch (\RuntimeException $exception) {
+                        return Status::KNOCKOUT;
+                    }
                 }
             }
         }
-        // TODO
         $this->logTask('ExtensionUpdates end');
 
         return Status::OK;
