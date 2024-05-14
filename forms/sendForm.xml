@@ -5,19 +5,19 @@
 			<field
 				name="email"
 				type="text"
-				label="PLG_TASK_UPDATENOTIFICATION_EMAIL_LBL"
-				description="PLG_TASK_UPDATENOTIFICATION_EMAIL_DESC"
+				label="PLG_TASK_EXTENSIONUPDATES_EMAIL_LBL"
+				description="PLG_TASK_EXTENSIONUPDATES_EMAIL_DESC"
 				default=""
 			/>
 			<field
 				name="language_override"
 				type="language"
-				label="PLG_TASK_UPDATENOTIFICATION_LANGUAGE_OVERRIDE_LBL"
-				description="PLG_TASK_UPDATENOTIFICATION_LANGUAGE_OVERRIDE_DESC"
+				label="PLG_TASK_EXTENSIONUPDATES_LANGUAGE_OVERRIDE_LBL"
+				description="PLG_TASK_EXTENSIONUPDATES_LANGUAGE_OVERRIDE_DESC"
 				default=""
 				client="administrator"
 				>
-				<option value="">PLG_TASK_UPDATENOTIFICATION_LANGUAGE_OVERRIDE_NONE</option>
+				<option value="">PLG_TASK_EXTENSIONUPDATES_LANGUAGE_OVERRIDE_NONE</option>
 			</field>
 		</fieldset>
 	</fields>

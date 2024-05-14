@@ -178,25 +178,21 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
         }
 
         foreach ($updates as $updateId => $updateValue) {
-            $tmp = 1;
-
             // Replace merge codes with their values
-            $newVersion = $updateValue->version;
-            $currentVersion = $updateValue->current_version;
-            $extensionType = $updateValue->type;
-            $extensionName = ExtensionHelper::getExtensionRecord($updateValue->element, $updateValue->type)->name;
-
             $substitutions = [
-                'newversion'  => $newVersion,
-                'curversion'  => $currentVersion,
-                'url'         => Uri::base(),
-                'updateLink'  => $uri->toString(),
+                'newversion'   => $updateValue->version,
+                'curversion'   => $updateValue->current_version,
+				'sitename'     => $this->getApplication()->get('sitename'),
+                'url'          => Uri::base(),
+                'updatelink'   => $uri->toString(),
+				'extensiontype' => $updateValue->type,
+				'extensionname' => ExtensionHelper::getExtensionRecord($updateValue->element, $updateValue->type)->name,
             ];
 
             // Send the emails to the Super Users
             foreach ($superUsers as $superUser) {
                 try {
-                    $mailer = new MailTemplate('plg_task_extensionupdates.mail', $jLanguage->getTag());
+                    $mailer = new MailTemplate('plg_task_extensionupdates.extension_update', $jLanguage->getTag());
                     $mailer->addRecipient($superUser->email);
                     $mailer->addTemplateData($substitutions);
                     $mailer->send();
