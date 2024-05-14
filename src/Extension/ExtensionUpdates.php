@@ -93,7 +93,6 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
         $joomlaUpdateModel = $this->getApplication()->bootComponent('com_joomlaupdate')
             ->getMVCFactory()->createModel('Update', 'Administrator', ['ignore_request' => true]);
 
-
         $noneCoreExtensionIds = $joomlaUpdateModel->getNonCoreExtensions();
 
         foreach ($noneCoreExtensionIds as $key => $value) {
@@ -178,15 +177,24 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
         }
 
         foreach ($updates as $updateId => $updateValue) {
+
+            // Get the extension name from the database; We need a special handling for plugins here
+            if ($updateValue->type === 'plugin') {
+                $extensionName = ExtensionHelper::getExtensionRecord($updateValue->element, $updateValue->type, $updateValue->client_id, $updateValue->folder)->name;
+            }
+            else {
+                $extensionName = ExtensionHelper::getExtensionRecord($updateValue->element, $updateValue->type)->name;
+            }
+
             // Replace merge codes with their values
             $substitutions = [
-                'newversion'   => $updateValue->version,
-                'curversion'   => $updateValue->current_version,
-				'sitename'     => $this->getApplication()->get('sitename'),
-                'url'          => Uri::base(),
-                'updatelink'   => $uri->toString(),
+                'newversion'    => $updateValue->version,
+                'curversion'    => $updateValue->current_version,
+				'sitename'      => $this->getApplication()->get('sitename'),
+                'url'           => Uri::base(),
+                'updatelink'    => $uri->toString(),
 				'extensiontype' => $updateValue->type,
-				'extensionname' => ExtensionHelper::getExtensionRecord($updateValue->element, $updateValue->type)->name,
+				'extensionname' => $extensionName,
             ];
 
             // Send the emails to the Super Users
@@ -205,6 +213,7 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
                 }
             }
         }
+
         $this->logTask('ExtensionUpdates end');
 
         return Status::OK;
