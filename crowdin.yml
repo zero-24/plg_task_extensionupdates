@@ -9,7 +9,7 @@
     "translation": "/%locale%/plg_task_extensionupdates.sys.ini",
     "update_option": "update_as_unapproved"
   },
-	{
+  {
     "source": "/en-GB/plg_task_extensionupdates.ini",
     "translation": "/%locale%/plg_task_extensionupdates.ini",
     "update_option": "update_as_unapproved"
