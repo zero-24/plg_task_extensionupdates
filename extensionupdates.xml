@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="task" method="upgrade">
+	<name>plg_task_extensionupdates</name>
+	<author>Tobias Zulauf</author>
+	<creationDate>2024-05-14</creationDate>
+	<copyright>Copyright (C) 2024 Tobias Zulauf (jah-tz.de). All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>kontakt@jah-tz.de</authorEmail>
+	<authorUrl>www.jah-tz.de</authorUrl>
+	<version>1.0.0</version>
+	<description>PLG_TASK_EXTENSIONUPDATES_XML_DESCRIPTION</description>
+	<namespace path="src">Joomla\Plugin\Task\ExtensionUpdates</namespace>
+	<files>
+		<folder>forms</folder>
+		<folder>language</folder>
+		<folder plugin="extensionupdates">services</folder>
+		<folder>src</folder>
+	</files>
+	<updateservers>
+		<server type="extension" name="CustomCSS Update Site">https://raw.githubusercontent.com/zero-24/plg_task_extensionupdates/master/update.xml</server>
+	</updateservers>
+</extension>
