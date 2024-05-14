@@ -12,7 +12,7 @@
 		<downloads>
 			<downloadurl type="full" format="zip">https://github.com/zero-24/plg_task_extensionupdates/releases/download/1.0.0/plg_task_extensionupdates.zip</downloadurl>
 		</downloads>
-		<sha512>f89b3e98c09697621083f7ffe5636f3078487e6e2f1d7d51f5b0c9197a21a3f1aa835a5e1710c3db656f8e94da3318ae30caaa0a530eeb0fd08b1fe85c011372</sha512>
+		<sha512>2f25f28e00548408555a9957cdbe79cd8100430bee16cc0555c00dcd92bb02d01bd1f98c336e374570b34fcbfe1ad82c90e7f2c22919cb15698a1cb767d49751</sha512>
 		<tags>
 			<tag>stable</tag>
 		</tags>
