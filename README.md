@@ -29,7 +29,7 @@ You want to translate this extension to your own language? Check out my [Crowdin
 
 ## Joomla! Extensions Directory (JED)
 
-This plugin can also been found in the Joomla! Extensions Directory: [ExtensionUpdates by zero24](follows)
+This plugin can also been found in the Joomla! Extensions Directory: [ExtensionUpdates by zero24](https://extensions.joomla.org/extension/extensionupdates/)
 
 ## Release steps
 
