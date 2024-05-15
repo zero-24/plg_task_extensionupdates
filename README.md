@@ -1,6 +1,6 @@
 # ExtensionUpdates Plugin
 
-This Joomla plugin checks for updates of extensions and sends an eMail once avaible, the code is based on the core plg_task_updatenotification plugin.
+This Joomla plugin checks for updates of extensions and sends an eMail once available, the code is based on the core plg_task_updatenotification plugin.
 
 ## Configuration
 
