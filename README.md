@@ -9,7 +9,7 @@ This Joomla plugin checks for updates of extensions and sends an eMail once avai
 - [Download the latest version of the plugin](https://github.com/zero-24/plg_task_extensionupdates/releases/latest)
 - Install the plugin using `Upload & Install`
 - Enable the plugin `Task - ExtensionUpdates` from the plugin manager
-- Setup the new Task PLugin `System -> Scheduled Tasks -> New -> ExtensionUpdates`
+- Setup the new Task Plugin `System -> Scheduled Tasks -> New -> ExtensionUpdates`
 
 Now the inital setup is completed, please make sure that the cron has been fully setup in the best cases it should use the WebCron setting.
 
