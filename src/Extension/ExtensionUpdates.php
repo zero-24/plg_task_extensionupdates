@@ -90,13 +90,12 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
         $specificEmail  = $event->getArgument('params')->email ?? '';
         $forcedLanguage = $event->getArgument('params')->language_override ?? '';
 
-        $joomlaUpdateModel = $this->getApplication()->bootComponent('com_joomlaupdate')
-            ->getMVCFactory()->createModel('Update', 'Administrator', ['ignore_request' => true]);
+        $eids = $this->getNoneCoreExtensionIdsWithUpdateServer();
 
-        $noneCoreExtensionIds = $joomlaUpdateModel->getNonCoreExtensions();
-
-        foreach ($noneCoreExtensionIds as $key => $value) {
-            $eids[] = $value->extension_id;
+        // When there are no extensions our job is done.
+        if (empty($eids))
+        {
+            return Status::OK;
         }
 
         // Get any available updates
@@ -113,7 +112,6 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
         $installerModel = $this->getApplication()->bootComponent('com_installer')
             ->getMVCFactory()->createModel('Update', 'Administrator', ['ignore_request' => true]);
 
-        //$installerModel->setState('filter.extension_id', $eids);
         $updates = $installerModel->getItems();
 
         // If there are no updates we don't have to notify anyone about anything. This is NOT a duplicate check.
@@ -127,9 +125,6 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
         $baseURL .= (substr($baseURL, -13) !== 'administrator') ? '/administrator/' : '/';
         $baseURL .= 'index.php?option=com_installer&view=update';
         $uri      = new Uri($baseURL);
-
-
-        //TODO
 
         /**
          * Some third party security solutions require a secret query parameter to allow log in to the administrator
@@ -190,11 +185,11 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
             $substitutions = [
                 'newversion'    => $updateValue->version,
                 'curversion'    => $updateValue->current_version,
-				'sitename'      => $this->getApplication()->get('sitename'),
+                'sitename'      => $this->getApplication()->get('sitename'),
                 'url'           => Uri::base(),
                 'updatelink'    => $uri->toString(),
-				'extensiontype' => $updateValue->type,
-				'extensionname' => $extensionName,
+                'extensiontype' => $updateValue->type,
+                'extensionname' => $extensionName,
             ];
 
             // Send the emails to the Super Users
@@ -310,5 +305,44 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
         }
 
         return $ret;
+    }
+
+    /**
+     * Method to return only the extension IDs which do have an update server
+     *
+     * @return array  An array of eids which
+     *
+     * @since  1.0.1
+     */
+    private function getNoneCoreExtensionIdsWithUpdateServer()
+    {
+        // Get the updater models as there is already a method to get non core extensions.
+        $joomlaUpdateModel = $this->getApplication()->bootComponent('com_joomlaupdate')
+            ->getMVCFactory()->createModel('Update', 'Administrator', ['ignore_request' => true]);
+
+        $noneCoreExtensionIds = $joomlaUpdateModel->getNonCoreExtensions();
+
+		// Create an array of the ids we need
+        foreach ($noneCoreExtensionIds as $key => $value) {
+            $eids[] = $value->extension_id;
+        }
+
+        // When no extensions are installed we have nothing to check for.
+        if (count($eids) === 0)
+        {
+            return [];
+        }
+
+        // Check the #__update_sites_extensions table with the eids
+        $db    = $this->getDatabase();
+        $query = $db->getQuery(true)
+            ->select($db->quoteName(['extension_id']))
+            ->from($db->quoteName('#__update_sites_extensions'))
+            ->whereIn($db->quoteName('extension_id'), $eids);
+
+        $db->setQuery($query);
+
+        // Retrun the result
+        return $db->loadColumn();
     }
 }
