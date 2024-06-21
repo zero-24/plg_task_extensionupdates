@@ -179,8 +179,8 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
                 'sitename'      => $this->getApplication()->get('sitename'),
                 'url'           => Uri::base(),
                 'updatelink'    => $uri->toString(),
-				'extensiontype' => $updateValue->type,
-				'extensionname' => $updateValue->name,
+                'extensiontype' => $updateValue->type,
+                'extensionname' => $updateValue->name,
             ];
 
             // Send the emails to the Super Users
@@ -313,7 +313,7 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
 
         $noneCoreExtensionIds = $joomlaUpdateModel->getNonCoreExtensions();
 
-		// Create an array of the ids we need
+        // Create an array of the ids we need
         foreach ($noneCoreExtensionIds as $key => $value) {
             $eids[] = $value->extension_id;
         }
