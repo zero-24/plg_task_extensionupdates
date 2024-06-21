@@ -10,7 +10,6 @@
 namespace Joomla\Plugin\Task\ExtensionUpdates\Extension;
 
 use Joomla\CMS\Access\Access;
-use Joomla\CMS\Extension\ExtensionHelper;
 use Joomla\CMS\Mail\Exception\MailDisabledException;
 use Joomla\CMS\Mail\MailTemplate;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -173,14 +172,6 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
 
         foreach ($updates as $updateId => $updateValue) {
 
-            // Get the extension name from the database; We need a special handling for plugins here
-            if ($updateValue->type === 'plugin') {
-                $extensionName = ExtensionHelper::getExtensionRecord($updateValue->element, $updateValue->type, $updateValue->client_id, $updateValue->folder)->name;
-            }
-            else {
-                $extensionName = ExtensionHelper::getExtensionRecord($updateValue->element, $updateValue->type)->name;
-            }
-
             // Replace merge codes with their values
             $substitutions = [
                 'newversion'    => $updateValue->version,
@@ -188,8 +179,8 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
                 'sitename'      => $this->getApplication()->get('sitename'),
                 'url'           => Uri::base(),
                 'updatelink'    => $uri->toString(),
-                'extensiontype' => $updateValue->type,
-                'extensionname' => $extensionName,
+				'extensiontype' => $updateValue->type,
+				'extensionname' => $updateValue->name,
             ];
 
             // Send the emails to the Super Users
