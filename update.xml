@@ -1,24 +1,45 @@
 <?xml version="1.0" ?>
 <updates>
 	<update>
-		<name>ExtensionUpdates 1.0.1</name>
+		<name>ExtensionUpdates 1.0.2</name>
 		<description>ExtensionUpdates Plugin</description>
 		<element>extensionupdates</element>
 		<type>plugin</type>
 		<folder>task</folder>
 		<client>site</client>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 		<infourl title="ExtensionUpdates Plugin">https://github.com/zero-24/plg_task_extensionupdates</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/zero-24/plg_task_extensionupdates/releases/download/1.0.1/plg_task_extensionupdates.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/zero-24/plg_task_extensionupdates/releases/download/1.0.2/plg_task_extensionupdates.zip</downloadurl>
 		</downloads>
-		<sha512>2d4e0314111568610018f4ef737793338b36f6f2454f858a1b979664f87aaff610d228625194a92393e2cc45b6d3bcbf36dad8b994e35614af048faa3037859e</sha512>
+		<sha512>d51ab7e5d3caa6094e2db3db802372e33938ed987dfcd257878ad3756ca1f5971e16038c13887ca7b16cc6449ad64d00b4462dac02d658f017daa24e6b18b669</sha512>
 		<tags>
 			<tag>stable</tag>
 		</tags>
 		<maintainer>Tobias Zulauf</maintainer>
 		<maintainerurl>https://www.jah-tz.de</maintainerurl>
 		<php_minimum>8.1.0</php_minimum>
-		<targetplatform name="joomla" version="5.[123]"/>
+		<targetplatform name="joomla" version="5.[1234]"/>
+	</update>
+	<update>
+		<name>ExtensionUpdates 1.0.2</name>
+		<description>ExtensionUpdates Plugin</description>
+		<element>extensionupdates</element>
+		<type>plugin</type>
+		<folder>task</folder>
+		<client>site</client>
+		<version>1.0.2</version>
+		<infourl title="ExtensionUpdates Plugin">https://github.com/zero-24/plg_task_extensionupdates</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/zero-24/plg_task_extensionupdates/releases/download/1.0.2/plg_task_extensionupdates.zip</downloadurl>
+		</downloads>
+		<sha512>d51ab7e5d3caa6094e2db3db802372e33938ed987dfcd257878ad3756ca1f5971e16038c13887ca7b16cc6449ad64d00b4462dac02d658f017daa24e6b18b669</sha512>
+		<tags>
+			<tag>stable</tag>
+		</tags>
+		<maintainer>Tobias Zulauf</maintainer>
+		<maintainerurl>https://www.jah-tz.de</maintainerurl>
+		<php_minimum>8.1.0</php_minimum>
+		<targetplatform name="joomla" version="6.0"/>
 	</update>
 </updates>
