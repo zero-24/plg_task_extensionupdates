@@ -1,18 +1,18 @@
 <?xml version="1.0" ?>
 <updates>
 	<update>
-		<name>ExtensionUpdates 1.0.3</name>
+		<name>ExtensionUpdates 1.0.4</name>
 		<description>ExtensionUpdates Plugin</description>
 		<element>extensionupdates</element>
 		<type>plugin</type>
 		<folder>task</folder>
 		<client>site</client>
-		<version>1.0.3</version>
+		<version>1.0.4</version>
 		<infourl title="ExtensionUpdates Plugin">https://github.com/zero-24/plg_task_extensionupdates</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/zero-24/plg_task_extensionupdates/releases/download/1.0.3/plg_task_extensionupdates.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/zero-24/plg_task_extensionupdates/releases/download/1.0.4/plg_task_extensionupdates.zip</downloadurl>
 		</downloads>
-		<sha512>09584e743dad972f129d19f41a8ec5819616e860aa50237a0b4864d000f72c702f18c1712c0bd37e804ce30127e7fe17976511f1cbd7799ce72ffcebfccf0b22</sha512>
+		<sha512>ce502d7a7806db28aa0617c8007caedf37a978213b07f87b53d6e2f3a3442a2f855ddd7997182abc22d5095ae91a460f6230fa08318b39af48242b7954362e6c</sha512>
 		<tags>
 			<tag>stable</tag>
 		</tags>
@@ -22,18 +22,18 @@
 		<targetplatform name="joomla" version="5.[1234]"/>
 	</update>
 	<update>
-		<name>ExtensionUpdates 1.0.3</name>
+		<name>ExtensionUpdates 1.0.4</name>
 		<description>ExtensionUpdates Plugin</description>
 		<element>extensionupdates</element>
 		<type>plugin</type>
 		<folder>task</folder>
 		<client>site</client>
-		<version>1.0.3</version>
+		<version>1.0.4</version>
 		<infourl title="ExtensionUpdates Plugin">https://github.com/zero-24/plg_task_extensionupdates</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/zero-24/plg_task_extensionupdates/releases/download/1.0.3/plg_task_extensionupdates.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/zero-24/plg_task_extensionupdates/releases/download/1.0.4/plg_task_extensionupdates.zip</downloadurl>
 		</downloads>
-		<sha512>09584e743dad972f129d19f41a8ec5819616e860aa50237a0b4864d000f72c702f18c1712c0bd37e804ce30127e7fe17976511f1cbd7799ce72ffcebfccf0b22</sha512>
+		<sha512>ce502d7a7806db28aa0617c8007caedf37a978213b07f87b53d6e2f3a3442a2f855ddd7997182abc22d5095ae91a460f6230fa08318b39af48242b7954362e6c</sha512>
 		<tags>
 			<tag>stable</tag>
 		</tags>
