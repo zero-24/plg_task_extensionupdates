@@ -181,6 +181,7 @@ final class ExtensionUpdates extends CMSPlugin implements SubscriberInterface
                 'updatelink'    => $uri->toString(),
                 'extensiontype' => $updateValue->type,
                 'extensionname' => $updateValue->name,
+				'extensionid'   => $updateValue->extension_id,
             ];
 
             // Send the emails to the Super Users
